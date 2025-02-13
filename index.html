@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine's Day Rose Petals</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            background: linear-gradient(45deg, #ffcccb, #ffe4e1);
+        }
+
+        .petal-container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+        }
+
+        .petal {
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            background: radial-gradient(circle at center, #ff6984, #e53935);
+            border-radius: 50%;
+            transform: rotate(45deg);
+            opacity: 0.9;
+            animation: fall 10s linear infinite;
+        }
+
+        .petal::before, .petal::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: inherit;
+            border-radius: 50%;
+        }
+
+        .petal::before {
+            top: -50%;
+            left: 0;
+            transform: rotate(-45deg) scale(0.8);
+            filter: blur(1px);
+        }
+
+        .petal::after {
+            bottom: -50%;
+            right: 0;
+            transform: rotate(45deg) scale(0.9);
+            filter: blur(0.5px);
+        }
+
+        @keyframes fall {
+            0% {
+                top: -5%;
+                opacity: 1;
+                transform: translateY(0) rotate(0deg) scale(1.2);
+            }
+            100% {
+                top: 105%;
+                opacity: 0;
+                transform: translateY(0) rotate(1440deg) scale(0.7);
+            }
+        }
+
+        .petal.pink {
+            background: radial-gradient(circle at center, #ff99cc, #ff3399);
+            animation-duration: 8s;
+        }
+
+        .petal.red {
+            background: radial-gradient(circle at center, #ef0eab, #e22a3d);
+            animation-duration: 12s;
+        }
+
+        .love-note {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: rgba(255, 255, 255, 0.9);
+            font-family: 'Dancing Script', cursive;
+            font-size: 3em;
+            text-shadow: 0 0 10px rgba(255, 102, 204, 0.8);
+        }
+
+        .love-note span {
+            display: block;
+            animation: pulse 3s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="petal-container" id="petals"></div>
+    <div class="love-note">
+        <span>Happy Valentine's Day!</span>
+        <span>💖</span>
+    </div>
+
+    <script>
+        const container = document.getElementById('petals');
+        const colors = ['pink', 'red'];
+        const totalPetals = 100;
+
+        function createPetal() {
+            const petal = document.createElement('div');
+            petal.className = `petal ${colors[Math.floor(Math.random() * colors.length)]}`;
+            petal.style.left = `${Math.random() * 100}%`;
+            petal.style.animationDelay = `${Math.random() * 5}s`;
+
+            container.appendChild(petal);
+
+            setTimeout(() => {
+                petal.remove();
+            }, 15000);
+        }
+
+        setInterval(createPetal, 100);
+    </script>
+</body>
+</html>
